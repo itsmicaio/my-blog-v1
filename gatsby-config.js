@@ -6,6 +6,7 @@ module.exports = {
     position: `Co-Founder and Software Enginner at VilaApps`
   },
   plugins: [
+    `gatsby-plugin-styled-components`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
