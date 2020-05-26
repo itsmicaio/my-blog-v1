@@ -1,6 +1,8 @@
 const path = require('path')
 require('dotenv').config({ path: path.resolve(__dirname, '.env') })
+
 const queries = require('./src/utils/algolia_queries')
+
 module.exports = {
   siteMetadata: {
     title: `Um Jovem Empreendesenvolvedor`,
