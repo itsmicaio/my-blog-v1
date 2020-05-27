@@ -5,10 +5,11 @@ const queries = require('./src/utils/algolia_queries')
 
 module.exports = {
   siteMetadata: {
-    title: `Um Jovem Empreendesenvolvedor`,
+    title: `Caio Fuzatto`,
     description: `A blog about tecnologies`,
-    author: `Caio Fuzatto`,
-    position: `Co-Founder and Software Enginner at VilaApps`
+    author: `@itsmicaio`,
+    position: `Co-Founder and Software Enginner at VilaApps`,
+    siteUrl: `https://itsmicaio.com.br`
   },
   plugins: [
     `gatsby-plugin-styled-components`,
@@ -82,6 +83,7 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
+    `gatsby-plugin-sitemap`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
