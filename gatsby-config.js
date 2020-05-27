@@ -9,7 +9,7 @@ module.exports = {
     description: `A blog about tecnologies`,
     author: `@itsmicaio`,
     position: `Co-Founder and Software Enginner at VilaApps`,
-    siteUrl: `https://itsmicaio.com.br`
+    siteUrl: `https://itsmicaio.netlify.app/`
   },
   plugins: [
     `gatsby-plugin-styled-components`,
