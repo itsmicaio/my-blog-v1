@@ -4,6 +4,9 @@ backend:
   branch: master
   site_domain: https://itsmicaio.netlify.app
 
+site_url: https://itsmicaio.netlify.app
+display_url: https://itsmicaio.netlify.app
+
 publish_mode: editorial_workflow
 media_folder: "static/assets/img"
 public_folder: "assets/img"
