@@ -77,8 +77,8 @@ module.exports = {
         name: `Caio Fuzatto`,
         short_name: `Caio Fuzatto`,
         start_url: `/`,
-        background_color: `#16202c`,
-        theme_color: `#16202c`,
+        background_color: `#000`,
+        theme_color: `#000`,
         display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
