@@ -2,7 +2,6 @@ backend:
   name: github
   repo: itsmicaio/my-blog
   branch: master
-  site_domain: https://itsmicaio.netlify.app
 
 site_url: https://itsmicaio.netlify.app
 display_url: https://itsmicaio.netlify.app
