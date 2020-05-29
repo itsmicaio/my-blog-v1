@@ -6,9 +6,9 @@ const queries = require('./src/utils/algolia_queries')
 module.exports = {
   siteMetadata: {
     title: `Caio Fuzatto`,
-    description: `A blog about tecnologies`,
+    description: `Um blog sobre as tecnologias maravilhosas do mundo moderno e outras coisinhas`,
     author: `@itsmicaio`,
-    position: `Co-Founder and Software Enginner at VilaApps`,
+    position: `Software Enginner & Solutions Arquitet`,
     siteUrl: `https://itsmicaio.netlify.app/`
   },
   plugins: [
