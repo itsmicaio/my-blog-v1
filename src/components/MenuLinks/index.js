@@ -5,7 +5,7 @@ import links from "./content"
 import getThemeColor from '../../utils/getThemeColor'
 import * as S from "./styled"
 
-const MenuLinks = () => (
+const MenuLinks = ({ setIsMenuOpen, isMenuOpen }) => (
   <S.MenuLinksWrapper>
     <S.MenuLinksList>
       {links.map((link, i) => (
@@ -17,6 +17,7 @@ const MenuLinks = () => (
             direction="left"
             bg={getThemeColor()}
             duration={0.6}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {link.label}
           </S.MenuLinksLink>

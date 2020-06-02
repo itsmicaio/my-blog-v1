@@ -6,17 +6,23 @@ import { UpArrowAlt as Arrow } from "@styled-icons/boxicons-regular/UpArrowAlt"
 import { Bulb as Light } from "@styled-icons/boxicons-regular/Bulb"
 import { Grid } from "@styled-icons/boxicons-solid/Grid"
 import { ThList as List } from "@styled-icons/typicons/ThList"
+import { Menu } from '@styled-icons/boxicons-regular/Menu'
 
 import getThemeColor from '../../utils/getThemeColor'
 
 import * as S from "./styled"
 
-const MenuBar = () => {
+const MenuBar = ({ setIsMenuOpen, isMenuOpen }) => {
   const [theme, setTheme] = useState(null)
   const [display, setDisplay] = useState(null)
 
   const isDarkMode = theme === "dark"
   const isListMode = display === "list"
+
+  const openMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+    console.log(isMenuOpen)
+  }
 
   useEffect(() => {
     setTheme(window.__theme)
@@ -53,6 +59,15 @@ const MenuBar = () => {
           </S.MenuBarItem>
         </S.MenuBarLink>
       </S.MenuBarGroup>
+
+      <S.MenuBarGroupMobile>
+        <S.MenuBarGroup>
+          <S.MenuBarItem title="Abrir Menu" onClick={openMenu}>
+            <Menu />
+          </S.MenuBarItem>
+        </S.MenuBarGroup>
+      </S.MenuBarGroupMobile>
+
       <S.MenuBarGroup>
         <S.MenuBarItem
           title="Mudar o tema"

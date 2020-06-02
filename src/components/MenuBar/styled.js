@@ -36,6 +36,13 @@ export const MenuBarGroup = styled.div`
   `}
 `
 
+export const MenuBarGroupMobile = styled.div`
+  display: none;
+  ${media.lessThan('large')`
+    display: block;
+  `}
+`
+
 export const MenuBarLink = styled(AniLink)`
   display: block;
 
@@ -54,6 +61,11 @@ export const MenuBarItem = styled.span`
   padding: 1.1rem;
   position: relative;
   width: 3.75rem;
+
+  svg {
+    vertical-align: middle;
+  }
+
   &.light {
     color: #d4d400;
     &:hover {
