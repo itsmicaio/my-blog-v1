@@ -28,6 +28,7 @@
     "gsap": "^3.2.6",
     "lazysizes": "^5.2.1-rc2",
     "netlify-cms-app": "^2.12.13",
+    "netlify-plugin-gatsby-cache": "^0.2.2",
     "prismjs": "^1.20.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
@@ -47,7 +48,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
+    "build": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build --log-pages",
     "develop": "gatsby develop",
     "develop:playground": "GATSBY_GRAPHQL_IDE=playground gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
