@@ -7,7 +7,9 @@ const Profile = ({ title, position, description, isMobileHeader }) => {
     
   return (
     <S.ProfileWrapper isMobileHeader={isMobileHeader}>
-      <S.ProfileLink>
+      <S.ProfileLink
+        to={"/"}
+      >
         <Avatar />
         <S.ProfileAuthor>
           {title}
