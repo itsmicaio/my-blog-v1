@@ -25,7 +25,7 @@ const portfolioList = [
         year: "2019",
         image: "icon.png",
         description: `
-            Na LiftBank o trabalho foi simples: transformar uma aplicação feita em Ionic para React Native.
+            Na LiftBank o trabalho foi objetivo: transformar uma aplicação feita em Ionic para React Native.
             Ajudar no MVP de um banco voltado para empreendedores, foi uma época de muita experiencia na 
             minha carreira, pois fiquei um período trabalhando no escritório do Lift, junto a equipe para 
             finalizarmos o projeto, e pude não só trocar algumas experiéncias como também conhecer um pouco
@@ -50,10 +50,10 @@ const portfolioList = [
         year: "2016",
         image: "icon.png",
         description:    `
-            Apesar de ser um projeto simples, esse sistema para windows, foi motivo de muito orgulho para
-            mim. Utilizei as tecnologias Visual Basic 2010 com um banco de dados local doWindows Access, o GDA
-            foi desenvolvido como projeto do meu TCC  no curso Técnico em Logística oferecido pelo SENAI, feito 
-            para ser utilizado nas aulas práticas dentro dos armazéns do SENAI.`
+            Apesar de ser um projeto simples, esse sistema desktop para windows, foi motivo de muito orgulho para
+            mim. Feito em Visual Basic 2010 com um banco de dados local do Windows Access, o GDA foi desenvolvido 
+            como projeto do meu TCC  no curso Técnico em Logística oferecido pelo SENAI, feito para ser utilizado 
+            nas aulas práticas dentro dos armazéns do SENAI.`
     }
 ]
 
@@ -65,7 +65,7 @@ const Portfolio = () => (
             portfolioList.map((product, index) =>
                 <PortfolioItem 
                     key={product.item}
-                    right={(index % 2) != 0}
+                    right={(index % 2) !== 0}
                     left={(index % 2) === 0}
                     {...product}
                 />
