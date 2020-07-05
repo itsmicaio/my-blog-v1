@@ -73,7 +73,7 @@ module.exports = {
         background_color: `#000`,
         theme_color: `#000`,
         display: `minimal-ui`,
-        icon: `static/assets/img/iconRound.png`, // This path is relative to the root of the site.
+        icon: `static/assets/img/icon.png`, // This path is relative to the root of the site.
       },
     },
     `gatsby-plugin-sitemap`,

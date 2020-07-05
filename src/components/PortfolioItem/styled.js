@@ -29,9 +29,9 @@ export const PortfolioItemWrapper = styled.section`
 `
 
 export const PortfolioItemImage = styled(Img)`
-  display: flex;
-  min-width: 12rem;
+  min-width: 240px;
   min-height: 12rem;
+  
   display: ${props => ((props.left && props.side === "left") || (props.right && props.side === "right") ? "flex" : "none")};
 
   body#grid & {

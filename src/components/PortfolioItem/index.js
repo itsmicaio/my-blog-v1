@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
-import {useStaticQuery, graphql} from 'gatsby'
 
+import Image from './Image'
 import * as S from "./styled"
 
 const PortfolioItem = ({
@@ -9,28 +9,18 @@ const PortfolioItem = ({
   year,
   description,
   image,
+  imageAlt,
   right,
   left,
 }) => {
-  const {portfolioImage} = useStaticQuery(
-    graphql`
-      query {
-        portfolioImage: file(relativePath: { eq: "icon.png" }){
-          childImageSharp {
-            fluid(maxWidth: 512){
-              ...GatsbyImageSharpFluid
-            }
-          }
-        }
-      }
-  `)
   return (
     <S.PortfolioItemWrapper>
-      <S.PortfolioItemImage 
+      <Image
         right={right}
         left={left}
         side="left"
-        fluid={portfolioImage.childImageSharp.fluid}
+        alt={imageAlt}
+        filename={image}
       />
       <S.PortfolioItemInfo
         right={right}
@@ -42,11 +32,12 @@ const PortfolioItem = ({
         </S.PortfolioItemDate>
         <S.PortfolioItemDescription>{description}</S.PortfolioItemDescription>
       </S.PortfolioItemInfo>
-      <S.PortfolioItemImage 
+      <Image
         right={right}
         left={left}
         side="right"
-        fluid={portfolioImage.childImageSharp.fluid}
+        alt={imageAlt}
+        filename={image}
       />
     </S.PortfolioItemWrapper>
 )}

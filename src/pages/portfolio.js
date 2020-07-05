@@ -11,7 +11,8 @@ const portfolioList = [
         id: "folha_vitoria",
         title: "Folha Vitória",
         year: "2020",
-        image: "icon.png",
+        image: "folha_vitoria.jpeg",
+        imageAlt: "Foto do aplicativo Folha Vitória",
         description: `
             Desenvolver o aplicativo do Jornal Folha Vitória foi uma grande tarefa, pois ja era um produto de sucesso,
             com muitos leitores, e nós precisavamos entregar um produto com qualidade e tão intuitivo quanto o
@@ -20,10 +21,11 @@ const portfolioList = [
         `
     },
     {
-        id: 'lift_bank',
+        id: 'liftbank',
         title: "LiftBank",
         year: "2019",
-        image: "icon.png",
+        image: "liftbank.jpeg",
+        imageAlt: "Foto do aplicativo LiftBank",
         description: `
             Na LiftBank o trabalho foi objetivo: transformar uma aplicação feita em Ionic para React Native.
             Ajudar no MVP de um banco voltado para empreendedores, foi uma época de muita experiencia na 
@@ -36,7 +38,8 @@ const portfolioList = [
         id: "omni_relprev",
         title: "Omni Relprev",
         year: "2018",
-        image: "icon.png",
+        image: "omni_relprev.jpeg",
+        imageAlt: "Foto do aplicativo Omni Relprev",
         description: `
             Omni Relprev é um sistema completo, Web Application feito em Rails com APIs que são consumidas
             por um app em React Native. Vencedor do prémio INOVANAC esse projeto tem como objetivo principal 
@@ -48,7 +51,8 @@ const portfolioList = [
         id: "gdaproject",
         title: "Gerenciador de Armazém",
         year: "2016",
-        image: "icon.png",
+        image: "gda.png",
+        imageAlt: "Foto do sistema Gerenciador de Armazén",
         description:    `
             Apesar de ser um projeto simples, esse sistema desktop para windows, foi motivo de muito orgulho para
             mim. Feito em Visual Basic 2010 com um banco de dados local do Windows Access, o GDA foi desenvolvido 
