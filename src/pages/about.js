@@ -20,8 +20,8 @@ const AboutPage = () => (
         <a href="https://www.vilapps.com.br/" target="_blank" rel="noopener noreferrer">
           VilaApps
         </a>
-        {' '}uma startup capixaba, que tem como objetivo entregar soluções em nuvem que facilitam a 
-        vida do clientes.
+        {' '}uma startup capixaba, que tem como objetivo ser um parceiro estratégico dos negócios, ajudando
+        com consultoria especializada e densevolvimento de softwares de alta qualidade e nativos em nuvem.
       </p>
 
       <p>
@@ -32,7 +32,7 @@ const AboutPage = () => (
 
       <p>
         Antes de entrar na faculdade de Ciência da Computação, cursei um técnico em Logística, 
-        que me fez além de muito mais organizado, ter certeza de que programar é era o que eu 
+        que me fez além de muito mais organizado, ter certeza de que programar era o que eu 
         queria pra minha vida, isso por que o curso tinha dois módulos de "TI", que ensinava VBA.
       </p>
 

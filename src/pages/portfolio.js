@@ -15,8 +15,8 @@ const portfolioList = [
         imageAlt: "Foto do aplicativo Folha Vitória",
         description: `
             Desenvolver o aplicativo do Jornal Folha Vitória foi uma grande tarefa, pois ja era um produto de sucesso,
-            com muitos leitores, e nós precisavamos entregar um produto com qualidade e tão intuitivo quanto o
-            portal. Ser o líder e desenvolvedor desse projeto geraram uma grande bagagem para minha vida
+            com muitos leitores, e nós precisavamos entregar um produto com a mesma qualidade e tão intuitivo quanto
+            a aplicação web. Ser o líder e desenvolvedor desse projeto geraram uma grande bagagem para minha vida
             profissional, e o app em React Native é um sucesso tanto quanto o portal web.
         `
     },
@@ -31,7 +31,7 @@ const portfolioList = [
             Ajudar no MVP de um banco voltado para empreendedores, foi uma época de muita experiencia na 
             minha carreira, pois fiquei um período trabalhando no escritório do Lift, junto a equipe para 
             finalizarmos o projeto, e pude não só trocar algumas experiéncias como também conhecer um pouco
-            do coração de um banco digital.
+            do coração de um banco digital, além de fazer amizades que levarei pro resto da vida!
         `
     },
     {
