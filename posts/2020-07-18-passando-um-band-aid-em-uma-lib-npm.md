@@ -3,12 +3,14 @@ title: Passando um band-aid em uma lib npm
 description: Utilizando patch-package você pode corrigir aquele bug chato na lib
   de forma fácil e rápida.
 date: 2020-07-18T11:10:27.000Z
-thumbnail: assets/img/banner2.png
+thumbnail: assets/img/caio-banner-passando-o-band-aid-no-código.png
 category: js
 ---
 Você já se deparou com um bug chato na lib que você instalou para resolver os seus problemas? Aquele bug que depois de procurar bastante você caiu numa issue do github onde descobriu que era um defeito na lib?
 
 Bom, trago aqui a solução dos seus problemas. Com o [patch-package](https://github.com/ds300/patch-package) você consegue alterar um trecho de código da lib e salvar a alteração, sem que sua solução se perca em instalações futuras.
+
+![Banner - Passando o band-aid no código](/assets/img/caio-banner-passando-o-band-aid-no-código.png)
 
 Sem mais delongas, let's code it
 
