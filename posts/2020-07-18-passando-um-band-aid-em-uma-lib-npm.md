@@ -45,7 +45,7 @@ E dessa mesma maneira, você deve ir alterando todos os arquivos até que sua so
 Chegamos na parte principal do nosso tutorial. É aqui que você vai salvar suas alterações e deixa-la pronta pra sua equipe instalar e poderem continuar trabalhando no projeto. Para isso, é bem simples, rode o comando  a baixo
 
 ```
-yarn patch-package <lib-que-será-alterada>
+yarn patch-package <lib-alterada>
 
 //No meu caso:
 yarn patch-package react-native-video
