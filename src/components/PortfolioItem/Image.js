@@ -31,9 +31,7 @@ const Image = ({filename, ...props}) => (
       if (!image) {
         return null
       }
-      console.log('oi')
       const imageSizes = image.node.childImageSharp.sizes
-      console.log(imageSizes)
       return <S.PortfolioItemImage sizes={imageSizes} {...props} />
     }}
   />

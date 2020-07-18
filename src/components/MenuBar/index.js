@@ -21,7 +21,6 @@ const MenuBar = ({ setIsMenuOpen, isMenuOpen }) => {
 
   const openMenu = () => {
     setIsMenuOpen(!isMenuOpen)
-    console.log(isMenuOpen)
   }
 
   useEffect(() => {
