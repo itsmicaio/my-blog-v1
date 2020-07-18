@@ -8,8 +8,8 @@ module.exports = {
     title: `Caio Fuzatto`,
     description: `Um blog sobre as tecnologias maravilhosas do mundo moderno e outras coisinhas`,
     author: `@itsmicaio`,
-    position: `Software Enginner & Solutions Arquitet`,
-    siteUrl: `https://itsmicaio.netlify.app/`
+    position: `Software Engineer & Solutions Architect`,
+    siteUrl: `https://caiofuzatto.com.br/`
   },
   plugins: [
     `gatsby-plugin-styled-components`,
