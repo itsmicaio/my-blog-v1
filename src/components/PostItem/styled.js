@@ -39,17 +39,14 @@ export const PostItemWrapper = styled.section`
 `
 
 export const PostItemTag = styled.div`
-  align-items: center;
   background: ${props => (props.background ? props.background : "var(--highlight)")};
   border-radius: 50%;
   color: var(--postColor);
   display: flex;
-  font-size: 1.3rem;
-  font-weight: 700;
   justify-content: center;
+  align-items: center;
   min-height: 90px;
   min-width: 90px;
-  text-transform: uppercase;
 
   ${media.lessThan("large")`
     border-radius: 0;
@@ -63,6 +60,10 @@ export const PostItemTag = styled.div`
   body#grid & {
     margin-bottom: 1.5rem;
   }
+`
+
+export const PostItemTagIcon = styled.span`
+
 `
 
 export const PostItemInfo = styled.div`

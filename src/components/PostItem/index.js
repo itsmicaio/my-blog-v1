@@ -2,6 +2,8 @@ import React from "react"
 import PropTypes from "prop-types"
 
 import getThemeColor from '../../utils/getThemeColor'
+
+import PostItemTag from './Tag'
 import * as S from "./styled"
 
 const PostItem = ({
@@ -20,7 +22,7 @@ const PostItem = ({
     duration={0.6}
   >
     <S.PostItemWrapper>
-      <S.PostItemTag background={"#BBB"}>{category}</S.PostItemTag>
+      <PostItemTag category={category} />
       <S.PostItemInfo>
         <S.PostItemDate>
           {date} • {timeToRead} min de leitura
