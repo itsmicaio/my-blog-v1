@@ -30,13 +30,18 @@ Com o patch-package instalado, vamos de fato alterar o código da lib. Vou mostr
 
 Esse aqui é um dos arquivos que eu terei que alterar na lib para adicionar o bufferConfig:
 
-![Alterações no de um arquivo](assets/img/captura-de-tela-2020-07-18-às-12.00.45.png "Pull request - Implement ios bufferConfig")
+![Alterações no de um arquivo](assets/img/captura-de-tela-2020-07-18-às-12.00.45.png)
 
-Para adicionar essa linha de código primeiro temos que entrar na pasta da lib, que fica localizada dentro das node_modules. Então caminhe até `node_modules/react-native/ios/Video/RCTVideoManager.m`, observe que o caminho será sempre semelhante a esse: `node_modules/<nome da lib>/...<arquivo da lib>`
+Para adicionar essa linha de código primeiro temos que entrar na pasta da lib, que fica localizada dentro das node_modules. 
+Então caminhe até:
+`node_modules/react-native/ios/Video/RCTVideoManager.m`
+
+Observe que o caminho será sempre semelhante a esse: 
+`node_modules/<nome da lib>/...<arquivo da lib>`
 
 Encontrado o arquivo basta eu adicionar as alterações exatamente na mesma linha que foi alterada no pull request: 
 
-![Alteração no meu código baseado no pull request](assets/img/captura-de-tela-2020-07-18-às-12.09.38.png "Alteração no meu código baseado no pull request")
+![Alteração no meu código baseado no pull request](assets/img/captura-de-tela-2020-07-18-às-12.09.38.png)
 
 E dessa mesma maneira, você deve ir alterando todos os arquivos até que sua solução esteja pronta.
 
