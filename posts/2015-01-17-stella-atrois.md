@@ -2,8 +2,7 @@
 date: 2015-01-17 05:54:23
 title: Lorem Lorem Ipsum
 description: And I'm not sure about the universe.
-category: Misc
-background: "#56eb34"
+category: react
 ---
 
 # Lorem ipsum

@@ -6,7 +6,6 @@ import * as S from "./styled"
 
 const PostItem = ({
   slug,
-  background,
   category,
   date,
   timeToRead,
@@ -21,7 +20,7 @@ const PostItem = ({
     duration={0.6}
   >
     <S.PostItemWrapper>
-      <S.PostItemTag background={background}>{category}</S.PostItemTag>
+      <S.PostItemTag background={"#BBB"}>{category}</S.PostItemTag>
       <S.PostItemInfo>
         <S.PostItemDate>
           {date} • {timeToRead} min de leitura

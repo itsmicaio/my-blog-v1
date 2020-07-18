@@ -3,8 +3,7 @@ title: Teste post
 description: Teste novo post
 date: 2020-05-27 07:05:34
 thumbnail: assets/img/desert.jpg
-category: svg
-background: "#7D669E"
+category: dev
 ---
 ## Mussum Ipsum, cacilds vidis litro abertis.
 
