@@ -3,8 +3,8 @@ backend:
   repo: itsmicaio/my-blog
   branch: master
 
-site_url: https://itsmicaio.netlify.app
-display_url: https://itsmicaio.netlify.app
+site_url: https://caiofuzatto.com.br
+display_url: https://caiofuzatto.com.br
 
 publish_mode: editorial_workflow
 media_folder: "static/assets/img"
