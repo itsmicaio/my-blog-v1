@@ -37,7 +37,7 @@ Para adicionar essa linha de código primeiro temos que entrar na pasta da lib, 
 ```bash
 node_modules/react-native/ios/Video/RCTVideoManager.m
 
-///Observe que o caminho sempre será semelhante a esse:
+//Observe que o caminho sempre será semelhante a esse:
 node_modules/<nome da lib>/...<arquivo da lib>
 ```
 
