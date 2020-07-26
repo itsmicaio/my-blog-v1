@@ -1,7 +1,7 @@
 ---
 title: Configurando i18n em projetos ReactJS
 description: Um jeito simples e eficiente de internacionalizar as suas aplicações web
-date: 2020-07-26 04:24:32
+date: 2020-07-26T04:24:32.000Z
 thumbnail: assets/img/banner2.png
 category: react
 ---
@@ -27,10 +27,10 @@ Após a instalação das libs, vamos separar o canto do i18n para deixar as cois
 
 na pasta source (src) do seu projeto, crie uma nova pasta chamada *i18n*, e em seguida crie um arquivo chamado *config.js* nessa pasta. Nós já vamos trabalhar nesse arquivo.
 
-Ainda falta uma pasta para guardar as nossas traduções, então, dentro da pasta *i18n* crie uma pasta chamada *translations* e nela crie dois arquivos um para as traduções em português que vai se chamar *br.json*, dentro desse arquivo cole nossa primeira tradução:
+Ainda falta uma pasta para guardar as nossas traduções, então, dentro da pasta *i18n* crie uma pasta chamada *translations* e nela crie dois arquivos um para as traduções em português que vai se chamar *pt.json*, dentro desse arquivo cole nossa primeira tradução:
 
 ```bash
-{   "br": {
+{   "pt": {
     "hello: "Olá, %{key}"
   }
 }
@@ -46,6 +46,21 @@ e um para inglês chamada *en.json*, dentro cole:
 }
 ```
 
-Em baixo eu vou mostrar na prática o uso do _%{key}_, mas ele serve para que nós possamos adicionar variáveis dentro da frase, esse é um exemplo simples, mas vocês podem adicionar quantas variáveis forem necessarias pa    asd 
+Em baixo eu vou mostrar na prática o uso do _%{key}_, mas ele serve para que nós possamos adicionar variáveis dentro da frase, esse é um exemplo simples, mas vocês podem adicionar quantas variáveis forem necessárias para compor sua mensagem.
 
 ### Configurando 
+Agora vamos pro código!
+
+No início do arquivo, vamos importar as libs e também criar um objeto chamado _translationGetters_ que vai armazenar os nossos arquivos de traduções.
+
+```javascript
+import i18n from 'i18n-js';
+import memoize from 'lodash.memoize';
+
+const translationGetters = {
+  pt: () => require('./translations/pt.json'),
+  en: () => require('./translations/en.json'),
+};
+```
+
+O próximo passo nós vamos iniciar a configuração no nosso codigo. 
