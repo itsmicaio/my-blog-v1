@@ -25,14 +25,14 @@ yarn add i18n-js lodash.memoize
 
 Após a instalação das libs, vamos separar o canto do i18n para deixar as coisas organizadas no nosso projeto
 
-na pasta source (src) do seu projeto, crie uma nova pasta chamada *i18n*, e em seguida crie um arquivo chamado *config.js* nessa pasta. Nós já vamos trabalhar nesse arquivo.
+Na pasta source (src) do seu projeto, crie uma nova pasta chamada *i18n*, e em seguida crie um arquivo chamado *config.js* nessa pasta. Nós já vamos trabalhar nesse arquivo.
 
 Ainda falta uma pasta para guardar as nossas traduções, então, dentro da pasta *i18n* crie uma pasta chamada *translations* e nela crie dois arquivos um para as traduções em português que vai se chamar *pt.json*, dentro desse arquivo cole nossa primeira tradução:
 
 ```bash
 {   
   "pt": {
-    "hello": "Olá, %{key}"
+    "hello": "Olá, %{key}",
     "global": {
       "exit": "Sair"
     }
@@ -45,7 +45,7 @@ e um para inglês chamada *en.json*, dentro cole:
 ```bash
 {
   "en": {
-    "hello": "Hello, %{key}"
+    "hello": "Hello, %{key}",
     "global": {
       "exit": "Exit"
     }
@@ -61,41 +61,41 @@ Agora vamos pro código!
 No início do arquivo, vamos importar as libs e também criar um objeto chamado _translationGetters_ que vai armazenar os nossos arquivos de traduções.
 
 ```javascript
-import i18n from 'i18n-js';
-import memoize from 'lodash.memoize';
+import i18n from 'i18n-js'
+import memoize from 'lodash.memoize'
 
 const translationGetters = {
   pt: () => require('./translations/pt.json'),
   en: () => require('./translations/en.json'),
-};
+}
 ```
 
 No próximo passo nós vamos iniciar a configuração no nosso código, para guardar o idioma do usuário nós vamos utilizar o [localStorage](https://developer.mozilla.org/pt-BR/docs/Web/API/Window/Window.localStorage). Adicione essas linhas no seu código:
 
 ```javascript
 export const setI18nConfig = () => {
-  const locale = getLocale();
+  const locale = getLocale()
   
   setDefaultLocale(locale)
-  i18n.translations = {[locale]: translationGetters[locale]()};
-  i18n.locale = locale;
-  translate.cache.clear();
+  i18n.translations = translationGetters[locale]()
+  i18n.locale = locale
+  translate.cache.clear()
 };
 
 const getLocale = () => {
   const locale = getDefaultLanguage() || "pt"
   
-  return locale;
+  return locale
 };
 
 export const setDefaultLocale = (language) => {
-  localStorage.setItem('language', language);
-};
+  localStorage.setItem('language', language)
+}
 
-export const getDefaultLocale = () => localStorage.getItem('language');
+export const getDefaultLocale = () => localStorage.getItem('language')
 ```
 
-A primeira função _setI18nConfig_ é responsável por setar as configurações necessárias, para isso, ela busca a _locale_ - que no nosso caso deve ser "pt" ou "en", e salva utilizando a função responsável por salvar no localStorage _setDefaultLocale_
+A primeira função _setI18nConfig_ é responsável por setar as configurações necessárias, para isso, ela busca a _locale_ - que no nosso caso deve ser "pt" ou "en", e guarda utilizando a função responsável por salvar no localStorage _setDefaultLocale_
 
 Além disso, ela também configura as _translations_ e o _locale_ do i18n. Observe que a função _getLocale_, busca o _locale_ salvo no _localStorage_, mas caso não ache nada vai utilizar português como a linguagem padrão.
 
@@ -105,7 +105,7 @@ Pra facilitar o uso do sistema, é ideal que o usuário ja entre com sua linguag
 ```javascript
 //atualize
 const getLocale = () => {
-  const locale = getDefaultLocale() || getBrowserLanguage(); || "pt"
+  const locale = getDefaultLocale() || getBrowserLanguage() || "pt"
   
   return locale;
 };
@@ -136,7 +136,7 @@ const getAvailableLocale = (language) => {
 
 Nó código acima, nós atualizamos o _getLocale_ para também pegar o _getBrowserLanguage_ caso não tenha um idioma definido no _localStorage_.
 
-Para buscar a linguagem padrão do navegador, nos utilizamos o _window.navigator_ que fornece pra gente o _userLanguage_ e o _language_, que para um usuário que usa o idioma Português Brasileiro devem ser algo parecido como pt\_BR, por isso, nós também criamos uma função para buscar o _locale_ correspondente (se existir) ao idioma do navegador. Nesse exemplo o _locale_ correspondente seria _pt_.
+Para buscar a linguagem padrão do navegador, nos utilizamos o _window.navigator_ que fornece pra gente o _userLanguage_ e o _language_, que para um usuário que usa o idioma Português Brasileiro deve ser algo parecido como pt\_BR, por isso, nós também criamos uma função para buscar o _locale_ correspondente (se existir) ao idioma do navegador. Nesse exemplo o _locale_ correspondente seria _pt_.
 
 ### Adicionando o método translate
 O método translate é o mais importante do nosso tutorial, ele que será utilizado para buscar as traduções.
@@ -145,7 +145,7 @@ O método translate é o mais importante do nosso tutorial, ele que será utiliz
 export const translate = memoize(
   (key, config) => i18n.t(key, config),
   (key, config) => (config ? key + JSON.stringify(config) : key),
-);
+)
 ```
 
 Esse método é um pouco confuso pra quem nunca utilizou o _memoize_, mas vamos entender o que está acontecendo aqui.
@@ -157,15 +157,15 @@ O segundo parâmetro (ou linha), é responsável pela criação de uma chave par
 Antes de chamar de fato nossa tradução no código, primeiro chame a função _setI18nConfig_ na index do seu projeto.
 
 ```javascript
-import { setI18nConfig } from '~/i18n/config';
+import { setI18nConfig } from '~/i18n/config'
 
-setI18nConfig();
+setI18nConfig()
 ```
 
 Tudo pronto, agora é só chamar o _translate_ no código e teremos o i18n com o memoize em ação:
 
 ```javascript
-import { translate } from '~/i18n/config';
+import { translate } from '~/i18n/config'
 translate('hello', {key: "World"})
 ```
 
