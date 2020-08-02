@@ -1,7 +1,7 @@
 ---
 title: Configurando i18n em projetos ReactJS
 description: Um jeito simples e eficiente de internacionalizar as suas aplicações web
-date: 2020-07-26T04:24:32.000Z
+date: 2020-08-02 04:11:30
 thumbnail: assets/img/banner-i18n-reactjs.png
 category: react
 ---
