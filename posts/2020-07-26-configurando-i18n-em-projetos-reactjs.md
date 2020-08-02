@@ -7,7 +7,7 @@ category: react
 ---
 Hoje em dia é comum termos que adicionar diferentes linguagens em aplicações web. Hoje vamos configurar um i18n bolado, com sistema de cache que vai facilitar muito a construção de seus produtos. Até mesmo para sistema com uma linguagem única é recomendável utilizar o i18n, pois você centraliza todas as mensagens em um único lugar, facilitando assim a manutenção do projeto.
 
-[]
+![Banner - Configurando i18n em projetos ReactJS](/assets/img/banner-i18n-reactjs.png)
 
 Para cuidar do cache do nosso i18n, nós vamos utilizar o [lodash.memoize](https://www.npmjs.com/package/lodash.memoize), ela vai dar uma performance a mais para nossa tradução, pois ela vai guardar o histórico de busca de traduções, facilitando o acesso das chaves já acessadas. Você pode [ler mais na documentação do lodash sobre o memoize](<>) e utilizar em outra situações.  
 
