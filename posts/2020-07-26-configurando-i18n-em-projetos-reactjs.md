@@ -2,12 +2,12 @@
 title: Configurando i18n em projetos ReactJS
 description: Um jeito simples e eficiente de internacionalizar as suas aplicações web
 date: 2020-07-26T04:24:32.000Z
-thumbnail: assets/img/banner2.png
+thumbnail: assets/img/banner-i18n-reactjs.png
 category: react
 ---
 Hoje em dia é comum termos que adicionar diferentes linguagens em aplicações web. Hoje vamos configurar um i18n bolado, com sistema de cache que vai facilitar muito a construção de seus produtos. Até mesmo para sistema com uma linguagem única é recomendável utilizar o i18n, pois você centraliza todas as mensagens em um único lugar, facilitando assim a manutenção do projeto.
 
-- FOTO DO POST
+[]
 
 Para cuidar do cache do nosso i18n, nós vamos utilizar o [lodash.memoize](https://www.npmjs.com/package/lodash.memoize), ela vai dar uma performance a mais para nossa tradução, pois ela vai guardar o histórico de busca de traduções, facilitando o acesso das chaves já acessadas. Você pode [ler mais na documentação do lodash sobre o memoize](<>) e utilizar em outra situações.  
 
@@ -166,11 +166,22 @@ Tudo pronto, agora é só chamar o _translate_ no código e teremos o i18n com o
 
 ```javascript
 import { translate } from '~/i18n/config'
-translate('hello', {key: "World"})
+translate('hello', {key: "Caio"})
+
+// output PT: "Olá, Caio"
+// output EN: "Hello, Caio"
 ```
 
 Observe que o primeiro parâmetro da função é o caminho da tradução separados por ponto, por exemplo vamos buscar a mensagem _exit_ dos nossos arquivos de traduções
 
 ```javascript
 translate('global.exit')
+
+// output PT: "Sair"
+// output EN: "Exit"
 ```
+
+### Conclusão
+Deixar as mensagens do sistema de forma diretamente no código nunca é uma boa opção, por isso, usar o i18n, mesmo para um sistema de idioma único pode ser uma ótima saída para centralizar as mensagens em um lugar só e facilitar a manutenção do código.
+
+Fiquem na paz, e logo menos eu volto com outro assunto rapeize, é nois!
