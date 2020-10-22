@@ -5,9 +5,23 @@ date: 2020-10-21T11:22:28.000Z
 thumbnail: assets/img/banner-i18n-reactjs.png
 category: react
 ---
+As push notifications ganharam o mundo com a chegada dos smarthphones, hoje em dia é impossível (ou quase) você ter um aplicativo em seu celular que não envie uma notificação ao longo do dia. Não da pra negar que pro negócio as push são essenciais para manter o engajamento dos usuários, e é por isso que hoje lhes trago o primeiro artigo de uma série de 3 artigos, na qual vou mostrar passo a passo a montar uma stack que sou muito fã e utilizou em alguns projetos na VilaApps.
+
+Se liga que legal vai ser essa jornada rapeize:
+
+- Parte 1: Configurando push notifications no React Native via console do SNS
+- Parte 2: Enviando push notifications a partir de um projeto Rails
+- Parte 3: Configurando tópicos do SNS e filas do SQS para envio em massa de push notifications
+
+então vamos lá, sem mais delongas, let's code it!
+
+![Imagem do post](banner2.png)
+
+
+
+
 1. passo criar um projeto React Native
 2. passo instalar o core do firebase 
-
 yarn add @react-native-firebase/app\
 yarn add @react-native-firebase/messaging\
 cd ios/ && pod install && cd ..
@@ -27,6 +41,7 @@ cd ios/ && pod install && cd ..
 6. adicionar e executar o plugin do firebase
 
 em /android/build.gradle
+
 ```java
 buildscript {
   dependencies {
@@ -38,12 +53,14 @@ buildscript {
 ```
 
 em /android/app/build.gradle
+
 ```java
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services' // <- Add this line
 ```
 
--- ios
+\-- ios
+
 7. gerar credenciais ios no firebase
 
 * pegar o pacote do aplicativo
@@ -51,15 +68,15 @@ apply plugin: 'com.google.gms.google-services' // <- Add this line
 
 6. baixar o arquivo GoogleService-Info.plist gerado pelo firebase e adicionar no aplicativo. Esse passo deve ser feito pelo XCode.
 
-Para isso de clique com o botão direito no nome do projeto e cliquem em "Add files to {nome do projeto}".
-Na janela que vai abrir selecione o arquivo em clique em "Add"
+Para isso de clique com o botão direito no nome do projeto e cliquem em "Add files to {nome do projeto}". Na janela que vai abrir selecione o arquivo em clique em "Add"
 
-7. configurar firebase com as credenciais do iOS
-Vá para /ios/{projectName}/AppDelegate.m
-No topo do arquivo, importe o firebase:
+7. configurar firebase com as credenciais do iOS Vá para /ios/{projectName}/AppDelegate.m
+   No topo do arquivo, importe o firebase:
+
 ```Swift
 #import <Firebase.h>
 ```
+
 Depois dentro da função didFinishLaunchingWithOptions adicione a configuração do Firebase
 
 ```Swift
@@ -73,30 +90,22 @@ Depois dentro da função didFinishLaunchingWithOptions adicione a configuraçã
 }
 ```
 
-8. Adicionar as "Capabilities"
-Clique no nome do projeto, depois vá em "Signing & Capabilities", lá clique em "+ Capabilities" para adicionar uma nova Capability
+8. Adicionar as "Capabilities" Clique no nome do projeto, depois vá em "Signing & Capabilities", lá clique em "+ Capabilities" para adicionar uma nova Capability
 
-Na tela que vai abrir procure por "Push Notifications" e de dois cliques para adicionar.
-Repita o mesmo processo mas dessas vez, procure por "Background Modes"
+Na tela que vai abrir procure por "Push Notifications" e de dois cliques para adicionar. Repita o mesmo processo mas dessas vez, procure por "Background Modes"
 Após adicionar o "Background Modes", você poderá escolher os modos que deseja habilitar.
 Selecione "Background Fetch" e "Remote Notifications"
 
-Veja abaixo o gif ilustrado que eu peguei da documentação do [RNFirebase](https://rnfirebase.io/):
-![Gif mostrando o passo a passo](https://images.prismic.io/invertase/3a618574-dd9f-4478-9f39-9834d142b2e5_xcode-background-modes-check.gif?auto=compress,format)
+Veja abaixo o gif ilustrado que eu peguei da documentação do [RNFirebase](https://rnfirebase.io/): ![Gif mostrando o passo a passo](https://images.prismic.io/invertase/3a618574-dd9f-4478-9f39-9834d142b2e5_xcode-background-modes-check.gif?auto=compress,format)
 
-9. Registrar uma nova chave APNs
-Pra poder enviar push notifications para dispositivos temos que ter uma "Key" registrada em nosso painel de desenvolvedor.
-Para isso entre no apple developer e registre uma nova chave Apple Push Notifications service (APNs)
+9. Registrar uma nova chave APNs Pra poder enviar push notifications para dispositivos temos que ter uma "Key" registrada em nosso painel de desenvolvedor.
+   Para isso entre no apple developer e registre uma nova chave Apple Push Notifications service (APNs)
+10. Conectar Firebase com o APNs Vá no painel do Firebase > Configurações do projeto > Cloud Messaging
 
-10. Conectar Firebase com o APNs
-Vá no painel do Firebase > Configurações do projeto > Cloud Messaging
-
-Procure pelo seu projeto iOS configurado anteriormente e clique para fazer upload de uma nova chave.
-Na janela que abre, selecione sua chave com extensão ".p8" que acabamos de gerar e cole o Key Id no campo abaixo.
+Procure pelo seu projeto iOS configurado anteriormente e clique para fazer upload de uma nova chave. Na janela que abre, selecione sua chave com extensão ".p8" que acabamos de gerar e cole o Key Id no campo abaixo.
 Você também precisará colar o código da sua equipe na Apple Developer. Esse código pode ser achado em seu perfil como "Team ID".
 
-11. Mandar uma notificação pelo console do Firebase
-Para isso, primeiro nós temos que pegar o token do dispositivo. Em algum lugar no seu aplicativo, adicione o seguinte código:
+11. Mandar uma notificação pelo console do Firebase Para isso, primeiro nós temos que pegar o token do dispositivo. Em algum lugar no seu aplicativo, adicione o seguinte código:
 
 ```javascript
 const configDeviceId = async () => {
@@ -108,21 +117,17 @@ const configDeviceId = async () => {
   }
 }
 ```
---- explicar código
 
-no console aparecerá o token do dispositivo
---- vá no console do firebase e envie uma mensagem
+\--- explicar código
 
--- aws sns
-Va para o painel do sns e crie um novo aplicativo
-- Coloque um nome para seu aplicativo
-- Selecione a Plataforma de notificações por push - 
- Firebase Cloud Messaging (FCM)
-- Chave da API - Vá em Firebase > Configurações do projeto > Cloud Messaging
-- Criar um aplicativo de plataforma
+no console aparecerá o token do dispositivo --- vá no console do firebase e envie uma mensagem
 
-Agora criado, vamos fazer o envio teste de uma mensagem via SNS.
-Para isso, precisamos adicionar nossos endpoints, nesse passo, utilizaremos o token do dispositivo também. Então vamos lá, no painel do seu aplicativo SNS, clique em Criar endpoint de aplicativo e insira o token.
+\-- aws sns Va para o painel do sns e crie um novo aplicativo
+
+* Coloque um nome para seu aplicativo
+* Selecione a Plataforma de notificações por push -  Firebase Cloud Messaging (FCM)
+* Chave da API - Vá em Firebase > Configurações do projeto > Cloud Messaging
+* Criar um aplicativo de plataforma
+
+Agora criado, vamos fazer o envio teste de uma mensagem via SNS. Para isso, precisamos adicionar nossos endpoints, nesse passo, utilizaremos o token do dispositivo também. Então vamos lá, no painel do seu aplicativo SNS, clique em Criar endpoint de aplicativo e insira o token.
 Feito isso, basta enviar uma mensagem
-
-
