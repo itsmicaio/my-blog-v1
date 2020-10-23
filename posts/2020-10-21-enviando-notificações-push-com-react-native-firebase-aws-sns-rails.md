@@ -8,95 +8,102 @@ category: react
 As push notifications ganharam o mundo com a chegada dos smarthphones, hoje em dia é impossível (ou quase) você ter um aplicativo em seu celular que não envie uma notificação ao longo do dia. Não da pra negar que pro negócio as push são essenciais para manter o engajamento dos usuários, e é por isso que hoje lhes trago o primeiro artigo de uma série de 3 artigos, na qual vou mostrar passo a passo a montar uma stack que sou muito fã e utilizou em alguns projetos na VilaApps.
 
 Se liga que legal vai ser essa jornada rapeize:
-
 - Parte 1: Configurando push notifications no React Native via console do SNS
 - Parte 2: Enviando push notifications a partir de um projeto Rails
 - Parte 3: Configurando tópicos do SNS e filas do SQS para envio em massa de push notifications
 
+![Imagem do post](/assets/img/banner2.png)
+
+Galera, pra esse passo a passo eu vou considerar que vocês já tenham um **projeto React Native configurado com as credenciais**. Isso é importante para fazer funcionar no iOS. Para Android não temos muitas limitações. Também é necessário ter uma **conta na AWS**.
+
 então vamos lá, sem mais delongas, let's code it!
 
-![Imagem do post](banner2.png)
-
-
-
-
-1. passo criar um projeto React Native
-2. passo instalar o core do firebase 
+### Instalando as libs
+O primeiro passo - como sempre - é instalar as libs. Então, no seu terminal, rode os comandos a baixo:
+```bash
 yarn add @react-native-firebase/app\
 yarn add @react-native-firebase/messaging\
 cd ios/ && pod install && cd ..
+```
 
-3. criar um projeto firebase
+### Criando projeto Firebase
+O Firebase vai ser o coração das nossas notificações. É ele que vai "bombear" as push notifications pros dispositivos cadastrados.\
+Para criar um projeto é bem simples, acesse o [console do Firebase](https://console.firebase.google.com/) e clique em "+ Adicionar projeto"
 
-\-- config android
+### Configurando app Android no Firebase
+Para conectar seu aplicativo com o Firebase, nós teremos que configura-lo no console do seu projeto recém criado. Logo após criar o projeto, a página inicial terá um banner te convidando a adicionar seu primeiro app, é lá mesmo que temos que ir, clique para adicionar um aplicativo Android.
 
-4. gerar credenciais android no firebase
+Preencha as informações solicitadas e clique em registrar.
 
-* pegar o pacote do aplicativo
-* rodar: cd android && ./gradlew signingReport
-* vão aparecer várias informações, nós precisaremos da chave SHA1 do "Variant: androidDebugTest" 
-* clicar em registrar
+_**Obs:** O Certificado de assinatura de depuração SHA-1 é opcional, mas você pode consegui-lo rodando `cd android && ./gradlew signingReport`. Ira aparecer uma série de chaves, você deve pegar o SHA-1 do Variant: androidDebugTest_
 
-5. baixar o arquivo google-service.json gerado pelo firebase e adicionar em android/app
+Agora vem um passo muito importante, porém, muito simples. O Firebase vai liberar a você o download do arquivo de credencias do seu app, denominado de _google-service.json_. Faça o download e leve-o direto pra pasta _/android/app_ do seu projeto React Native 
+
 6. adicionar e executar o plugin do firebase
 
-em /android/build.gradle
+Vamos agora adicionar o plugin do Firebase em _/android/build.gradle_
 
 ```java
 buildscript {
   dependencies {
-    // ... other dependencies
+    // ... outras dependencias
     classpath 'com.google.gms:google-services:4.3.3'
-    // Add me --- /\
+    // Adicione essa linha acima --- /\
   }
 }
 ```
 
-em /android/app/build.gradle
+Após adicionar o plugin, temos que executa-lo no final do arquivo _/android/app/build.gradle_
 
 ```java
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services' // <- Add this line
+apply plugin: 'com.google.gms.google-services' // <- Adicione essa linha
 ```
 
-\-- ios
+### Configurando app iOS no Firebase
+Como fizemos no Android, agora é hora de adicionar o aplicativo iOS em seu projeto Firebase.
+Na página inicial do console Firebase, novamente clique em adicionar um app, mas dessa vez escolha o iOS.
 
-7. gerar credenciais ios no firebase
+Preencha as informações solicitadas e clique em registrar.
 
-* pegar o pacote do aplicativo
-* pegar o id do aplicativo no Apple Developer - App Store Connect
+_**Obs:** você encontra o id do aplicativo em seu painel de desenvolvedor da App Store Connect_
 
-6. baixar o arquivo GoogleService-Info.plist gerado pelo firebase e adicionar no aplicativo. Esse passo deve ser feito pelo XCode.
+Novamente vamos o passo importante, porém, dessa vez será um pouco mais complicado. Isso por que, para adicionar um arquivo ao projeto iOS não basta arrasta-lo, o processo deve ser feito dentro do seu XCode.\
+Então vamos la, o Firebase vai te liberar o download do arquivo _GoogleService-Info.plist_, com ele em mãos, vamos para o XCode.
 
-Para isso de clique com o botão direito no nome do projeto e cliquem em "Add files to {nome do projeto}". Na janela que vai abrir selecione o arquivo em clique em "Add"
+Com seu projeto aberto, clique com o botão direito no nome do projeto (localizado no canto esquerdo da IDE), nas opções que vão se abrir, clique em "Add files to {nome do projeto}". Abrirá uma janela para você escolher o arquivo, selecione-o e clique em "Add"
 
-7. configurar firebase com as credenciais do iOS Vá para /ios/{projectName}/AppDelegate.m
-   No topo do arquivo, importe o firebase:
+Para finalizar temos que configurar o Firebase as credenciais que acabamos de adicionar no nosso código. 
+Abra o arquivo _/ios/{projectName}/AppDelegate.m_ e no topo do arquivo importe o firebase
 
 ```Swift
 #import <Firebase.h>
 ```
 
-Depois dentro da função didFinishLaunchingWithOptions adicione a configuração do Firebase
+Depois dentro desça um pouco o arquivo e ache a função `didFinishLaunchingWithOptions`, e adicione a configuração do Firebase dentro dela
 
 ```Swift
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  // Add me --- \/
+  // \/ --- Adicione esse bloco de código --- \/
   if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
   }
-  // Add me --- /\
+  // /\ --- Adicione esse bloco de código --- /\
   // ...
 }
 ```
 
-8. Adicionar as "Capabilities" Clique no nome do projeto, depois vá em "Signing & Capabilities", lá clique em "+ Capabilities" para adicionar uma nova Capability
+### Configurar Apple Push Notifications service (APNs)
+Diferente do Android, para receber notificações no iOS precisamos adicionar ~~super poderes~~ ao app, adicionando capacidade dele receber Push Notification e também de de trabalhar em segundo plano. Além de termos que adicionar uma key de APNs pra ele.
+
+Primeiro vamos adicionar as capacidades, ou Capabilities, para isso clique no nome do projeto, você ira ver a tela de configurações do app, lá procure "Signing & Capabilities" no menu horizontal logo acima das informações. Você verá um botão com o texto "+ Capability", clique nele para poder adicionar uma nova capacidade.
 
 Na tela que vai abrir procure por "Push Notifications" e de dois cliques para adicionar. Repita o mesmo processo mas dessas vez, procure por "Background Modes"
 Após adicionar o "Background Modes", você poderá escolher os modos que deseja habilitar.
-Selecione "Background Fetch" e "Remote Notifications"
+Para nosso objetivo devemos selecionar "Background Fetch" e "Remote Notifications"
 
 Veja abaixo o gif ilustrado que eu peguei da documentação do [RNFirebase](https://rnfirebase.io/): ![Gif mostrando o passo a passo](https://images.prismic.io/invertase/3a618574-dd9f-4478-9f39-9834d142b2e5_xcode-background-modes-check.gif?auto=compress,format)
+
 
 9. Registrar uma nova chave APNs Pra poder enviar push notifications para dispositivos temos que ter uma "Key" registrada em nosso painel de desenvolvedor.
    Para isso entre no apple developer e registre uma nova chave Apple Push Notifications service (APNs)
