@@ -142,14 +142,22 @@ Para dispositivos Android não é necessário conceder permissão para recebimen
 
 Tudo pronto, agora só precisamos rodar a aplicação e copiar o código que aparecerá no console e partir pro próximo passo.
 
-### Enviando notificacao
+### Enviando notificacao pelo console Firebase
+Para enviar uma notificação via console é muito simples, basta você entrar no seu painel, navegar para o serviço Cloud Messaging. Lá clique em "Send your first message".
+Você poderá escrever o título e o corpo da mensagem. Ao final, clique em enviar mensagem de teste e adicione seu dispositivo de teste utilizando o token resgatado no ultimo tópico.
 
-\-- aws sns Va para o painel do sns e crie um novo aplicativo
+### Criando um aplicativo AWS SNS
+O AWS Simple Notification Service, é uma alternativa excelente para envio de notificações para usuário, dentre algumas opções de notificações que ele suporta, estão email e sms, além da Push Notification que estamos utilizando nessa aula.
 
-* Coloque um nome para seu aplicativo
-* Selecione a Plataforma de notificações por push -  Firebase Cloud Messaging (FCM)
-* Chave da API - Vá em Firebase > Configurações do projeto > Cloud Messaging
-* Criar um aplicativo de plataforma
+Eu escolhi o SNS para fazer a orquestração das nossas push pois ele é um serviço mais completo com as outras formas de notificações, além do preço que 
+e bem pequeno. Se você não tem interesse de enviar notificações de outras naturezas, como sms e email, talvez o Firebase já consiga fazer o papel pra você, é sempre bom fazer uma análise mais profunda para escolher qual tecnologia usar.
 
+Mas vamos lá, hora de criar nosso aplicativo SNS. No seu console AWS entre no serviço Simple Notification Service e vá para Mobile > Notificações por push.\
+Lá nos vamos clicar em "Criar um aplicativo de plataforma" e preencher o formulário de criação.
+No formulário, coloque um nome para seu aplicativo, selecione a Plataforma de notificações por push -  Firebase Cloud Messaging (FCM).\
+No campo Chave da API, você vai precisar voltar em seu console Firebase e ir para Configurações do projeto > Cloud Messaging. Lá copie a Chave do servidor e cole no formulário. Para finalizar clique em "Criar um aplicativo de plataforma".
+
+### Criando um endpoint no nosso aplicativo SNS
+Um endpoint é como se fosse uma referência ao seu dispositivo. Ele é criado utilizando o token do dispositivo, e utiliza o mesmo para fazer o envio de notificaco  sdasd]][==
 Agora criado, vamos fazer o envio teste de uma mensagem via SNS. Para isso, precisamos adicionar nossos endpoints, nesse passo, utilizaremos o token do dispositivo também. Então vamos lá, no painel do seu aplicativo SNS, clique em Criar endpoint de aplicativo e insira o token.
 Feito isso, basta enviar uma mensagem
