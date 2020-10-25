@@ -104,30 +104,45 @@ Para nosso objetivo devemos selecionar "Background Fetch" e "Remote Notification
 
 Veja abaixo o gif ilustrado que eu peguei da documentação do [RNFirebase](https://rnfirebase.io/): ![Gif mostrando o passo a passo](https://images.prismic.io/invertase/3a618574-dd9f-4478-9f39-9834d142b2e5_xcode-background-modes-check.gif?auto=compress,format)
 
+### Registrando chave APNs na App Store Connect
+Para que tudo funcione como esperado, nós precisamos ainda gerar uma chave do Apple Push Notification Service - APNs.
 
-9. Registrar uma nova chave APNs Pra poder enviar push notifications para dispositivos temos que ter uma "Key" registrada em nosso painel de desenvolvedor.
-   Para isso entre no apple developer e registre uma nova chave Apple Push Notifications service (APNs)
-10. Conectar Firebase com o APNs Vá no painel do Firebase > Configurações do projeto > Cloud Messaging
+Esse passo é bem simples, no seu painel [Apple Developer](https://developer.apple.com/account/resources/authkeys/list), e clique para adicionar uma nova "Key". Digite o nome da sua chave e selecione Apple Push Notifications service (APNs) e prossiga para o registro. No final do processo será liberado o download da sua chave com extensão _.p8_. Guarde essa chave com muito cuidado, nós ja vamos precisar dela.
 
-Procure pelo seu projeto iOS configurado anteriormente e clique para fazer upload de uma nova chave. Na janela que abre, selecione sua chave com extensão ".p8" que acabamos de gerar e cole o Key Id no campo abaixo.
+### Conectar o Firebase com seu APNs
+O Firebase só consegue te enviar mensagens se ele tiver acesso a sua chave do APNs. 
+
+Por isso agora vamos fornecer ele os dados necessários para fazer isso.
+Em seu painel do Firebase vá para Configurações do projeto (na engrenagem na barra lateral), e depois entre na aba Cloud Messaging
+
+Dentro das configurações do Cloud Messaging, procure pelo seu projeto iOS configurado anteriormente e clique para fazer upload de uma nova chave. Na janela que abre, selecione sua chave com extensão ".p8" que acabamos de gerar e cole o Key ID no campo abaixo - você encontra o Key ID no mesmo lugar que configuramos nossa chave APNs.\
 Você também precisará colar o código da sua equipe na Apple Developer. Esse código pode ser achado em seu perfil como "Team ID".
 
-11. Mandar uma notificação pelo console do Firebase Para isso, primeiro nós temos que pegar o token do dispositivo. Em algum lugar no seu aplicativo, adicione o seguinte código:
+### Solicitando permissão e encontrando o Device ID
+O envio de notificação é feito com base no token do dispositivo, que é gerado automaticamente pelo Firebase. Então, antes de enviarmos uma mensagem precisamos pegar o device id do nosso dispositivo de teste.
+Para celulares iOS, também é necessário pedir permissão pro usuário para utilizar funções de push, como resgatar o token e receber notificações.
 
+Primeiro nós temos que pegar o token do dispositivo nosso dispositivo de testes **(O simulador do iOS não suporta Push Notifications, para testar você terá que usar um dispositivo real)**.
+
+Em algum lugar no seu aplicativo, adicione a seguinte função:
 ```javascript
-const configDeviceId = async () => {
+const printDeviceID = async () => {
   const authorizationStatus = await messaging().requestPermission();
 
   if (authorizationStatus) {
     const token = await messaging().getToken()
-    console.log(token)
+    console.log('token****', token)
   }
 }
 ```
+Essa função vai da um console.log no token do nosso dispositivo, porém, antes disso ela precisa solicitar permissão para enviar push notifications com o método `await messaging().requestPermission()` que retorna um booleano.\
+Para dispositivos Android não é necessário conceder permissão para recebimento de push, então a resposta será true, já para iOS o comando também faz a pergunta pro usuário se ele deseja conceder a permissão e retorna a resposta.
 
-\--- explicar código
+**Lembrando que você precisar de executar a função para que a ação ocorra, então de um `printDeviceID()` em algum lugar propício do seu código;**
 
-no console aparecerá o token do dispositivo --- vá no console do firebase e envie uma mensagem
+Tudo pronto, agora só precisamos rodar a aplicação e copiar o código que aparecerá no console e partir pro próximo passo.
+
+### Enviando notificacao
 
 \-- aws sns Va para o painel do sns e crie um novo aplicativo
 
