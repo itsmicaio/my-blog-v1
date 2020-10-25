@@ -142,7 +142,7 @@ Para dispositivos Android não é necessário conceder permissão para recebimen
 
 Tudo pronto, agora só precisamos rodar a aplicação e copiar o código que aparecerá no console e partir pro próximo passo.
 
-### Enviando notificacao pelo console Firebase
+### Enviando notificação pelo console Firebase
 Para enviar uma notificação via console é muito simples, basta você entrar no seu painel, navegar para o serviço Cloud Messaging. Lá clique em "Send your first message".
 Você poderá escrever o título e o corpo da mensagem. Ao final, clique em enviar mensagem de teste e adicione seu dispositivo de teste utilizando o token resgatado no ultimo tópico.
 
@@ -158,6 +158,24 @@ No formulário, coloque um nome para seu aplicativo, selecione a Plataforma de n
 No campo Chave da API, você vai precisar voltar em seu console Firebase e ir para Configurações do projeto > Cloud Messaging. Lá copie a Chave do servidor e cole no formulário. Para finalizar clique em "Criar um aplicativo de plataforma".
 
 ### Criando um endpoint no nosso aplicativo SNS
-Um endpoint é como se fosse uma referência ao seu dispositivo. Ele é criado utilizando o token do dispositivo, e utiliza o mesmo para fazer o envio de notificaco  sdasd]][==
-Agora criado, vamos fazer o envio teste de uma mensagem via SNS. Para isso, precisamos adicionar nossos endpoints, nesse passo, utilizaremos o token do dispositivo também. Então vamos lá, no painel do seu aplicativo SNS, clique em Criar endpoint de aplicativo e insira o token.
-Feito isso, basta enviar uma mensagem
+Um endpoint é como se fosse uma referência ao seu dispositivo. Ele é criado utilizando o token do dispositivo, e utiliza o mesmo para fazer o envio de notificação.
+
+Agora na página do aplicativo que acabamos de criar, clique em "Criar endpoint de aplicativo", insira o token e no campo de dados arbitrários não coloque nada. Prossiga para criar o endpoint.
+
+### Enviando notificação pelo console do SNS
+Também para validar nossa implementação vamos enviar uma notificação para nosso endpoint que acabamos de criar. Selecione seu endpoint de aplicativo, e clique em publicar mensagem.
+
+Em estrutura da mensagem, vamos selecionar "Carga personalizada"\
+No corpo da mensagem vamos colar o json abaixo.
+```json
+{
+     "GCM": "{ \"notification\": { \"body\": \"{Corpo da sua mensagem aqui}", \"title\": \"{Título da sua mensagem aqui}\", \"sound\":\"default\" } , \"data\" : {\"key\" : \"value\", \"key2\" : \"value\" } }"
+}
+```
+Observe que no objeto "notification", nós temos os atributos body e title, que servem para o corpo da mensagem e o título e também o objeto data, que é utilizado caso você queira enviar algum dado para o dispositivo. Isso é muito utilizado para fazer navegações no app via push, ou até dar bonificações ao usuário.
+
+### Conclusão
+Nessa primeira parte da nossa série das push, nós entendendo um pouco de como funciona o envio de push e configuramos nosso aplicativo em React Native para receber notificações enviada via console.\
+No proximo capítulo nós vamos fazer o envio de push através da nossa aplicação Ruby On Rails, configurando todo o fluxo de push notification e utilizando o aws-sdk para comunicação com o AWS SNS.
+
+Obrigado por lerem até aqui! Um abraço a todos e fiquem na paz :)
