@@ -19,12 +19,13 @@ Galera para esse tutorial eu vou considerar que você já tem uma aplicação Ra
 Bora codar!
 
 ### Instalando a gem aws-sdk-sns
-A AWS fornece um sdk muito completo para Ruby chamada aws-sdk. Esse gem é completamente modularizada, por isso nós vamos apenas instalar a aws-sdk-sns, que traz só a parte que nós precisamos do sdk que diz respeito ao Simple Notification Service.\
+A AWS fornece um sdk muito completo para Ruby chamada [aws-sdk](https://docs.aws.amazon.com/sdk-for-ruby/). Essa gem é completamente modularizada, por isso nós vamos apenas instalar a aws-sdk-sns, que traz só a parte que nós interessa o Simple Notification Service.\
 
 Em sua Gemfile adicione `gem 'aws-sdk-sns', '~> 1.2'` e rode `bundle` no seu terminal.
 
 ### Criando as AWS secrets
-Para conectar sua aplicação com sua conta na AWS, vamos utilizar o método das AWS Secrets. Apesar da gente estar utilizando esse método esse não é a melhor maneira de liberar acesso a AWS, a prática mais recomendada é utilizando as roles de acesso.
+Para conectar sua aplicação com sua conta na AWS, vamos utilizar o método das AWS Secrets.\
+Apesar da gente estar utilizando esse método, essa não é a melhor maneira de liberar acesso a AWS, a prática mais recomendada é utilizando as roles de acesso, mas isso é assunto para outro dia, sinta-se a vontade para pesquisar e implementar as roles na sua conta AWS.
 
 Vamos lá, para conseguir uma credencial da AWS nós temos que usar o serviço IAM, entre na página do IAM e crie um novo usuário.
 Entre no usuário e vá para "Credenciais de segurança" e Crie uma chave de acesso.
@@ -34,9 +35,15 @@ Como as AWS secrets são dois dados sensíveis e que seu vazamento pode prejudic
 Por isso, a melhor maneira é colocar esse dado como ENV.
 Então em um arquivo _.env_ adicione as chaves `AWS_ACCESS_KEY_ID` e a `AWS_SECRET_ACCESS_KEY`.
 
-Dessa forma, o sdk da aws já vai entender que essas envs correspondem a seu acesso na AWS e utilizar para se comunicar com sua conta AWS, sem nenhuma configuração adicional.
+Dessa forma, o sdk da aws já vai entender que essas envs correspondem a seu acesso na AWS e vai utiliza-lo para se comunicar com sua conta AWS.
+
 
 ### Criando o primeiro serviço: o disparador de push
+Nosso primeiro passo vai ser criar um serviço para disparar as push notifications, ele será responsável pela montagem do "json" e envio do comando para AWS.
+
+Em sua pasta services (se não tem uma pasta services em seu projeto, adicione em _/app_) crie uma nova pasta chamada _sns_ e logo em seguida crie dentro de _/sns_ um arquivo chamado "push_notification.rb". No final, o caminho para seu arquivo será "app/services/sns/push_notification"
+
+Dentro dele, cole o código abaixo:
 ```ruby
 module Sns
   class PushNotification
@@ -84,14 +91,19 @@ module Sns
   end
 end
 ```
+Note que estamos inicializando o serviço recebendo `sns_endpoint, title, body`. O `sns_endpoint` deve ser uma instância do model SnsEndpoint que nós falaremos logo abaixo. Já o `title, body` se referem ao título e ao corpo da mensagem da notificação.
+
+Logo em seguida temos o método `send_push_notification`, que chama o `publish` dentro de um bloco _begin-end_ para impedir que falhas acabem dando erro na nossa aplicação.\
+Nós tambéms estamos fazendo um tratamento especifico pro erro _Aws::SNS::Errors::EndpointDisabled_ logo no primeiro _rescue_, esse erro ocorre quando a AWS tenta enviar uma notificação pro endpoint e ele não recebe, o que significa que o usuário não tem mais o aplicativo instalado naquele celular, por isso a gente já deleta o objeto @sns_endpoint pra que não seja mais enviado nenhuma push para ele.
+
+Você pode ver outros [erros devolvidos pela AWS SNS nesse link](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SNS/Errors.html)
 
 ### Segundo serviço: criador de endpoint
 ```ruby
 module Sns
   class CreateEndpoint 
     def initialize(sns_endpoint)
-      @postman_arn = ENV["AWS_SNS_POSTMAN_ARN"]
-      @user_arn = ENV["AWS_SNS_USER_ARN"]
+      @arn = ENV["AWS_SNS_ARN"]
 
       @sns_endpoint = sns_endpoint
       @sns = Aws::SNS::Client.new
@@ -104,13 +116,9 @@ module Sns
     private
     def create_platform_endpoint
       @sns.create_platform_endpoint(
-        platform_application_arn: build_platform_arn,
+        platform_application_arn: @arn,
         token: @sns_endpoint.device_id
       )
-    end
-
-    def build_platform_arn
-      @sns_endpoint.postman.present? ? @postman_arn : @user_arn
     end
   end
 end
