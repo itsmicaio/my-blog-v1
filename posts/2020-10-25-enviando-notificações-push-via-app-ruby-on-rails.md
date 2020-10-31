@@ -41,7 +41,7 @@ Dessa forma, o sdk da aws já vai entender que essas envs correspondem a seu ace
 ### Criando o primeiro serviço: o disparador de push
 Nosso primeiro passo vai ser criar um serviço para disparar as push notifications, ele será responsável pela montagem do "json" e envio do comando para AWS.
 
-Em sua pasta services (se não tem uma pasta services em seu projeto, adicione em _/app_) crie uma nova pasta chamada _sns_ e logo em seguida crie dentro de _/sns_ um arquivo chamado "push_notification.rb". No final, o caminho para seu arquivo será "app/services/sns/push_notification"
+Em sua pasta services (se não tem uma pasta services em seu projeto, adicione em _/app_) crie uma nova pasta chamada _sns_ e logo em seguida crie dentro de _/sns_ um arquivo chamado "push_notification.rb". No final, o caminho para seu arquivo será "app/services/sns/push_notification.rb"
 
 Dentro dele, cole o código abaixo:
 ```ruby
@@ -99,6 +99,9 @@ Nós tambéms estamos fazendo um tratamento especifico pro erro _Aws::SNS::Error
 Você pode ver outros [erros devolvidos pela AWS SNS nesse link](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SNS/Errors.html)
 
 ### Segundo serviço: criador de endpoint
+Nesse momento nós vamos codar um serviço que vai ficar responsável por criar nossos endpoints na AWS.
+
+Dentro da nossa pasta _sns_ nós vamos criar um novo arquivo chamado _create_endpoint.rb_. O caminho final será _"app/services/sns/create_endpoint.rb"_. Com o arquivo criado, cole o código abaixo dentro dele:
 ```ruby
 module Sns
   class CreateEndpoint 
@@ -124,7 +127,17 @@ module Sns
 end
 ```
 
+Vamos entender o código, primeiro nós inicializamos a classe recebendo o nosso model (que será logo abaixo) e também inicializamos a classe do SNS. Para criar o endpoint a gente vai precisar do arn do nosso aplicativo SNS, por isso eu também estou setando a variável _@arn_.\
+No meu caso coloquei o ARN dentro das ENVs, pois minha roda em vários ambientes diferentes, você pode escolher qual será a melhor opção para você. Você pode achar o seu ARN no seu painel AWS.
+
+Em seguida nós chamamos a função create_platform_endpoint, que é a responsável por criar de fato o endpoint. Esse função apenas chama a funçao do _aws-sdk-sns_, passando o ARN e o device id.
+
 ### Terceiro serviço: destruidor de endpoint
+Agora chegamos no nosso terceiro e ultimo serviço.
+- Nossa mas pra que tanto serviço assim?
+Eu gosto de sempre separar bem as funções da aplicação pra facilitar no entendimento e na manutenção futura. Assim, a gente consegue diminuir muito o código que vai ficar dentro do nosso model e deixando nosso código bem limpo.
+
+Sobre o serviço, agora vamos fazer o serviço para destruir o endpoint dentro da AWS. Isso vai servir para quando o usuário não tem mais o app no celular
 ```ruby
 module Sns
   class DeleteEndpoint 
