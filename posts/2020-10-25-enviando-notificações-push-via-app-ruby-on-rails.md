@@ -134,10 +134,11 @@ Em seguida nós chamamos a função create_platform_endpoint, que é a responsá
 
 ### Terceiro serviço: destruidor de endpoint
 Agora chegamos no nosso terceiro e ultimo serviço.
-- Nossa mas pra que tanto serviço assim?
+- Nossa mas pra que tanto serviço assim?\
 Eu gosto de sempre separar bem as funções da aplicação pra facilitar no entendimento e na manutenção futura. Assim, a gente consegue diminuir muito o código que vai ficar dentro do nosso model e deixando nosso código bem limpo.
 
-Sobre o serviço, agora vamos fazer o serviço para destruir o endpoint dentro da AWS. Isso vai servir para quando o usuário não tem mais o app no celular
+Sobre o serviço, agora vamos fazer o serviço para destruir o endpoint dentro da AWS.\
+De novo na nossa pasta _sns_ vamos criar um arquivo, dessa vez chamado de _delete_endpoint.rb_. Dentro cole o código abaixo:
 ```ruby
 module Sns
   class DeleteEndpoint 
@@ -160,8 +161,15 @@ module Sns
 end
 ```
 
-### Criando o model SNS Endpoint
+Depois de todos os outros, esse é o mais simples de explicar, novamente nós vamos iniciar a classe recebendo o model e iniciando a classe do SNS. Depois, o método delete, vai chamar a função de delete do SDK.
 
+### Criando o model SNS Endpoint
+Enfim chegou o momento de criar o model. Já falamos muito sobre ele, mas agora vamos entender de fato qual é sua utilidade.\
+Sempre que nós formos enviar uma push a gente vai precisar do ARN, e é para isso que esse model vai servir. Ele terá uma relação com o usuário, vai salvar o ARN e também o id do dispositivo.
+
+Mão na massa, primeiro vamos gerar a migration. Em seu console digite `rails g model SnsEndpoint` para criar a migration e também o arquivo do model.
+
+Abra a migration que foi gerada, será algo como `create_sns_endpoint{}.rb` e cole o código abaixo:
 ```ruby
 class CreateSnsEndpoints < ActiveRecord::Migration[6.0]
   def change
@@ -169,24 +177,24 @@ class CreateSnsEndpoints < ActiveRecord::Migration[6.0]
       t.string :arn
       t.string :device_id, null: false, unique: true
       t.references :user, foreign_key: true
-      t.references :postman, foreign_key: true
 
       t.timestamps
     end
   end
 end
 ```
+Explicando rapidamente, nós estamos definindo duas _strings_, a primeira é o _arn_ e a segunda é o _device_id_. Para o _device_id_ eu também defini que ele não pode ser nulo e que ele deve ser único. Para finalizar, nós definimos o _user_, que é uma relação com o nosso usuário, por isso defini que quero que também seja criada uma _foreign_key_.
 
 ### Configurando model SNS Endpoint
+Agora vamos configurar nosso model de verdade.
+
+Procure por _sns_endpoint.rb_ em _app/models/_ e cole o seguinte código:
 ```ruby
 class SnsEndpoint < ApplicationRecord
-  belongs_to :postman, optional: true
-  belongs_to :user, optional: true
+  belongs_to :user
 
   validates :device_id, uniqueness: true
-  validates_presence_of :device_id
-
-  validate :validate_presence_of_user_or_postman
+  validates_presence_of :device_id, :user
 
   before_create :create_aws_sns_endpoint
   before_destroy :delete_aws_sns_endpoint
@@ -204,12 +212,6 @@ class SnsEndpoint < ApplicationRecord
 
   def delete_aws_sns_endpoint
     Sns::DeleteEndpoint.new(self).call
-  end
-
-  def validate_presence_of_user_or_postman
-    unless ( user.present? || postman.present? )
-      errors.add(:user, I18n.t("errors.messages.blank"))
-    end
   end
 end
 ```
