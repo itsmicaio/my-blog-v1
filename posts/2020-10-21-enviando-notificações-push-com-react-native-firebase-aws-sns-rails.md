@@ -1,10 +1,9 @@
 ---
 title: Configurando recebimento de push no app React Native
-description: Primeiro capítulo da série de três que vai dar um passo a passo da
-  configuração do envio e recimento de notificações push com React Native, AWS e
-  Ruby On Rails.
+description: Nesse tutorial nós vamos ver o passo a passo do recebimento de push
+  em um app, enviado via console SNS e Firebase
 date: 2020-10-21T11:22:28.000Z
-thumbnail: assets/img/banner-i18n-reactjs.png
+thumbnail: assets/img/banner-recebendo-push-react-native.png
 category: react
 ---
 As push notifications ganharam o mundo com a chegada dos smarthphones, hoje em dia é impossível (ou quase) você ter um aplicativo em seu celular que não envie uma notificação ao longo do dia. Não da pra negar que pro negócio as push são essenciais para manter o engajamento dos usuários, e é por isso que hoje lhes trago o primeiro artigo de uma série de 3 artigos, na qual vou mostrar passo a passo a montar uma stack que sou muito fã e utilizou em alguns projetos na VilaApps.
@@ -14,7 +13,7 @@ Se liga que legal vai ser essa jornada rapeize:
 - Parte 2: Enviando push notifications a partir de um projeto Rails
 - Parte 3: Configurando tópicos do SNS e filas do SQS para envio em massa de push notifications
 
-![Imagem do post](/assets/img/banner2.png)
+![Imagem do post](/assets/img/banner-recebendo-push-react-native.png)
 
 Galera, pra esse passo a passo eu vou considerar que vocês já tenham um **projeto React Native configurado com as credenciais**. Isso é importante para fazer funcionar no iOS. Para Android não temos muitas limitações. Também é necessário ter uma **conta na AWS**.
 
