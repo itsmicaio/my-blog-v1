@@ -112,7 +112,7 @@ O Firebase só consegue te enviar mensagens se ele tiver acesso a sua chave do A
 Por isso agora vamos fornecer ele os dados necessários para fazer isso.
 Em seu painel do Firebase vá para Configurações do projeto (na engrenagem da barra lateral), e depois entre na aba Cloud Messaging
 
-Dentro das configurações do Cloud Messaging, procure pelo seu projeto iOS configurado anteriormente e clique para fazer upload de uma nova chave.\ 
+Dentro das configurações do Cloud Messaging, procure pelo seu projeto iOS configurado anteriormente e clique para fazer upload de uma nova chave.\
 Na janela que abre, selecione sua chave com extensão ".p8" que acabamos de gerar e cole o Key ID no campo abaixo - encontre o Key ID no mesmo lugar que configuramos nossa chave APNs.\
 Você também precisará colar o código da sua equipe na Apple Developer. Esse código pode ser achado em seu perfil como "Team ID".
 
