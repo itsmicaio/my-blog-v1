@@ -2,7 +2,7 @@
 title: Configurando recebimento de push no app React Native
 description: Nesse tutorial nós vamos ver o passo a passo do recebimento de push
   em um app, enviado via console SNS e Firebase
-date: 2020-11-30 06:39:51
+date: 2020-11-30 07:04:02
 thumbnail: assets/img/banner-recebendo-push-react-native.png
 category: react
 ---
