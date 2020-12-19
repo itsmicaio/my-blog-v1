@@ -2,7 +2,7 @@
 title: Configurando recebimento de push no app React Native
 description: Nesse tutorial nós vamos ver o passo a passo do recebimento de push
   em um app, enviado via console SNS e Firebase
-date: 2020-11-30 07:04:02
+date: 2020-11-30T07:04:02.000Z
 thumbnail: assets/img/banner-recebendo-push-react-native.png
 category: react
 ---
@@ -125,6 +125,8 @@ Primeiro nós temos que pegar o token do nosso dispositivo de testes **(O simula
 
 Em algum lugar no seu aplicativo, adicione a seguinte função:
 ```javascript
+import messaging from '@react-native-firebase/messaging'
+
 const printDeviceID = async () => {
   const authorizationStatus = await messaging().requestPermission();
 
@@ -145,6 +147,9 @@ Tudo pronto, agora só precisamos rodar a aplicação e copiar o código que apa
 ### Enviando notificação pelo console Firebase
 Para enviar uma notificação via console é muito simples, basta você entrar no seu painel, navegar para o serviço Cloud Messaging. Lá clique em "Send your first message".
 Você poderá escrever o título e o corpo da mensagem. Ao final, clique em enviar mensagem de teste e adicione seu dispositivo de teste utilizando o token resgatado no ultimo tópico.
+
+- **Obs:** o Firebase Messaging só exibe push notification com o app em segundo plano (background)
+- **Obs2:** Para que tudo ocorra bem, as vezes é necessário reinstalar o app no dispositivo ou emulador
 
 ### Criando um aplicativo AWS SNS
 O AWS Simple Notification Service, é uma alternativa excelente para envio de notificações para usuário, dentre algumas opções de notificações que ele suporta, estão email e sms, além da Push Notification que estamos utilizando nessa aula.
