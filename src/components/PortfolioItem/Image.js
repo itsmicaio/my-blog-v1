@@ -8,7 +8,7 @@ const Image = ({filename, ...props}) => (
     query={graphql`
       query {
         images: allFile(
-          filter: { absolutePath: { regex: "/static/assets/img/portfolio/" } }
+          filter: { absolutePath: { regex: "/static/assets/img/" } }
         ) {
           edges {
             node {
